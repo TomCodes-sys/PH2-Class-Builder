@@ -15,7 +15,7 @@ body.cop{--side:var(--cop);--side-rgb:46,139,255}
 html{scrollbar-color:var(--line) var(--bg);scrollbar-width:thin}
 body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 "Segoe UI",system-ui,sans-serif;min-height:100vh;
   background-image:linear-gradient(rgba(var(--side-rgb),.045) 1px,transparent 1px),linear-gradient(90deg,rgba(var(--side-rgb),.045) 1px,transparent 1px);
-  background-size:34px 34px;transition:background-image .4s}
+  background-size:34px 34px}
 ::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}::-webkit-scrollbar-thumb:hover{background:var(--side)}
 ::selection{background:rgba(var(--side-rgb),.4)}
 header{padding:22px 28px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;position:relative}
@@ -28,15 +28,14 @@ main{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px;p
 section{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;margin-bottom:18px;position:relative;
   animation:rise .6s var(--ease) both;transition:border-color .3s,box-shadow .3s}
 section:hover{border-color:rgba(var(--side-rgb),.45);box-shadow:0 0 24px rgba(var(--side-rgb),.07)}
-main>div:first-child section:nth-child(2){animation-delay:.08s}
-main>div:first-child section:nth-child(3){animation-delay:.16s}
-main>div:last-child section{animation-delay:.12s}
+section:nth-of-type(2){animation-delay:.07s}section:nth-of-type(3){animation-delay:.14s}section:nth-of-type(4){animation-delay:.21s}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 section.raised{z-index:40}
 section h2{margin:0 0 6px;font-size:15px;color:var(--side);transition:color .35s}
 label{display:block;font-size:13px;color:var(--dim);margin:14px 0 5px}
+a.lnk{color:var(--side);text-decoration:none;border-bottom:1px dashed var(--side);transition:opacity .2s}
+a.lnk:hover{opacity:.75}
 
-/* inputs */
 .field{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:10px 12px;border-radius:6px;font:inherit;outline:none;
   transition:border-color .2s,box-shadow .25s,background .2s}
 .field:hover{border-color:#34406a}
@@ -46,7 +45,6 @@ textarea.field{resize:vertical;min-height:64px}
 @media(max-width:560px){.row{grid-template-columns:1fr}}
 .hint{font-size:12px;color:var(--dim);margin-top:5px}
 
-/* side toggle */
 .toggle{position:relative;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:8px;background:var(--panel2);overflow:hidden}
 .toggle .pill{position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:6px;background:var(--robber);
   box-shadow:0 0 18px rgba(255,59,78,.55);transition:transform .4s var(--ease),background .35s,box-shadow .35s}
@@ -56,7 +54,6 @@ textarea.field{resize:vertical;min-height:64px}
 .toggle button:not(.on):hover{color:var(--text)}
 .toggle button:focus-visible{outline:2px solid #fff;outline-offset:-4px;border-radius:6px}
 
-/* custom select */
 .sel{position:relative}
 .sel-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;cursor:pointer}
 .sel-btn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -74,7 +71,6 @@ textarea.field{resize:vertical;min-height:64px}
 .sel-opt.cur{color:var(--side);font-weight:600}
 .sel-opt.cur::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--side);align-self:center;box-shadow:0 0 8px var(--side)}
 
-/* number stepper */
 .num{display:flex;align-items:stretch}
 .num .field{border-radius:6px 0 0 6px;border-right:0;-moz-appearance:textfield;appearance:textfield}
 .num input::-webkit-outer-spin-button,.num input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
@@ -85,9 +81,15 @@ textarea.field{resize:vertical;min-height:64px}
 .num .stp button:hover{background:rgba(var(--side-rgb),.2)}
 .num .stp button:active{transform:scale(.88)}
 
-/* file picker */
-.filebox{display:flex;gap:8px}
+.filebox{display:flex;gap:8px;align-items:stretch}
 .filebox .field{flex:1;min-width:0}
+.thumb{position:relative;flex:none;width:44px;border:1px dashed var(--line);border-radius:6px;background:var(--panel2);display:grid;place-items:center;color:var(--dim);font-size:10px;text-align:center;line-height:1.1;transition:border-color .25s}
+.thumb.has{border-style:solid;border-color:var(--side)}
+.thumb img{width:100%;height:100%;object-fit:contain;border-radius:5px;padding:2px}
+.thumb .x{position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:50%;border:0;background:var(--side);color:#fff;font-size:12px;line-height:1;cursor:pointer;padding:0;
+  transform:scale(0);transition:transform .2s var(--ease)}
+.thumb.has:hover .x,.thumb .x:focus-visible{transform:scale(1)}
+
 .btn{position:relative;overflow:hidden;background:var(--panel2);color:var(--text);border:1px solid var(--line);padding:9px 15px;border-radius:6px;cursor:pointer;font:inherit;
   transition:border-color .2s,color .2s,box-shadow .25s,transform .12s,background .2s;white-space:nowrap}
 .btn:hover{border-color:var(--side);color:var(--side);box-shadow:0 0 16px rgba(var(--side-rgb),.25)}
@@ -95,12 +97,15 @@ textarea.field{resize:vertical;min-height:64px}
 .btn:focus-visible{outline:2px solid var(--side);outline-offset:2px}
 .btn.primary{background:var(--side);border-color:var(--side);color:#fff;font-weight:600}
 .btn.primary:hover{color:#fff;box-shadow:0 0 22px rgba(var(--side-rgb),.7)}
+.btn.danger.armed{background:#ff3b4e;border-color:#ff3b4e;color:#fff;animation:pulse .8s infinite}
+@keyframes pulse{50%{box-shadow:0 0 18px rgba(255,59,78,.8)}}
 .btn .rip{position:absolute;border-radius:50%;background:rgba(255,255,255,.35);transform:scale(0);animation:rip .6s ease-out forwards;pointer-events:none}
 @keyframes rip{to{transform:scale(4);opacity:0}}
 .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.status{font-size:12px;color:var(--dim);margin-top:10px;transition:color .3s}
+.status.ok{color:var(--ok)}.status.bad{color:#ff6b6b}
 
-/* output */
-pre{margin:0;background:#04060b;border:1px solid var(--line);border-radius:6px;padding:14px;overflow:auto;font:13px/1.6 Consolas,"Courier New",monospace;color:var(--ok);max-height:380px;transition:border-color .3s}
+pre{margin:0;background:#04060b;border:1px solid var(--line);border-radius:6px;padding:14px;overflow:auto;font:13px/1.6 Consolas,"Courier New",monospace;color:var(--ok);max-height:340px;transition:border-color .3s}
 pre.flash{animation:flash .5s}
 @keyframes flash{0%{border-color:var(--side);box-shadow:0 0 16px rgba(var(--side-rgb),.5)}100%{border-color:var(--line);box-shadow:none}}
 #msgs{margin-top:10px;font-size:13px}
@@ -111,30 +116,46 @@ pre.flash{animation:flash .5s}
 .card small{color:var(--dim)}
 .sticky{position:sticky;top:16px;align-self:start}
 #toast{position:fixed;left:50%;bottom:26px;background:var(--side);color:#fff;padding:10px 20px;border-radius:8px;font-weight:600;
-  transform:translate(-50%,30px);opacity:0;pointer-events:none;transition:transform .4s var(--ease),opacity .3s;box-shadow:0 0 26px rgba(var(--side-rgb),.6);z-index:50}
+  transform:translate(-50%,30px);opacity:0;pointer-events:none;transition:transform .4s var(--ease),opacity .3s;box-shadow:0 0 26px rgba(var(--side-rgb),.6);z-index:60}
 #toast.show{transform:translate(-50%,0);opacity:1}
+#tip{position:fixed;z-index:70;max-width:270px;background:#0f1424;border:1px solid var(--side);color:var(--text);padding:8px 11px;border-radius:7px;font-size:12.5px;line-height:1.4;
+  box-shadow:0 10px 30px rgba(0,0,0,.6),0 0 18px rgba(var(--side-rgb),.2);opacity:0;transform:translateY(4px) scale(.97);pointer-events:none;transition:opacity .18s,transform .22s var(--ease)}
+#tip.show{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <header>
   <h1>PH2 Class Builder</h1>
-  <span>Perfect Heist 2 custom classes. Fill the form, export the .json, drop it next to your .lua and icons.</span>
+  <span>Perfect Heist 2 custom classes. Your classes are saved in this browser as you work.</span>
 </header>
 
 <main>
   <div>
     <section>
+      <h2>Saved classes</h2>
+      <div id="libSel"></div>
+      <div class="btns" style="margin-top:10px">
+        <button type="button" class="btn" id="newC" data-tip="Start a blank class. Your current one is already saved.">New</button>
+        <button type="button" class="btn" id="dupC" data-tip="Make a copy of this class, including its attached icon images, and switch to the copy.">Duplicate</button>
+        <button type="button" class="btn danger" id="delC" data-tip="Permanently remove this class from the browser. Click twice to confirm.">Delete</button>
+        <button type="button" class="btn" id="imp" data-tip="Load .json or .zip files from your computer (including a backup). Each class becomes a new saved class, nothing is overwritten.">Import</button>
+        <button type="button" class="btn" id="expAll" data-tip="Download a backup .zip of every saved class, one folder each. Do this before clearing browser data. Import the zip later to restore them.">Export backup</button>
+      </div>
+      <div class="status" id="status">Loading...</div>
+    </section>
+
+    <section>
       <h2>Class</h2>
       <label>Side</label>
       <div class="toggle" id="sideToggle">
         <div class="pill"></div>
-        <button type="button" data-v="true" class="on">Robber</button>
-        <button type="button" data-v="false">Cop</button>
+        <button type="button" data-v="true" class="on" data-tip="Robber class. Categories: Breach, Stealth, Support.">Robber</button>
+        <button type="button" data-v="false" data-tip="Cop class. Categories: Combat, Intel, Support.">Cop</button>
       </div>
 
       <label for="DisplayName">Display name</label>
-      <input class="field" type="text" id="DisplayName" value="Assassin" placeholder="Assassin">
+      <input class="field" type="text" id="DisplayName" placeholder="Assassin">
 
       <label>Clothing row</label>
       <div id="clothSel"></div>
@@ -145,47 +166,49 @@ pre.flash{animation:flash .5s}
         <div><label>Secondary weapon</label><div id="secSel"></div></div>
       </div>
 
-      <label for="ClassCategory">Class category</label>
-      <div class="num" data-step="1" data-min="0"><input class="field" type="number" id="ClassCategory" value="0">
-        <div class="stp"><button type="button" data-d="1">&#9650;</button><button type="button" data-d="-1">&#9660;</button></div></div>
-      <div class="hint">Raw number. The README only shows 0.</div>
+      <label>Class category</label>
+      <div id="catSel"></div>
     </section>
 
     <section>
       <h2>Ability</h2>
       <label for="AbilityName">Ability name</label>
-      <input class="field" type="text" id="AbilityName" value="Cloak">
+      <input class="field" type="text" id="AbilityName">
       <label for="AbilityDescription">Ability description</label>
-      <textarea class="field" id="AbilityDescription">Turn invisible for 5 seconds.</textarea>
+      <textarea class="field" id="AbilityDescription"></textarea>
       <label for="AbilityCooldown">Cooldown (seconds)</label>
       <div class="num" data-step="0.5" data-min="0"><input class="field" type="number" id="AbilityCooldown" value="30">
-        <div class="stp"><button type="button" data-d="1">&#9650;</button><button type="button" data-d="-1">&#9660;</button></div></div>
+        <div class="stp"><button type="button" data-d="1" data-tip="Add 0.5 seconds">&#9650;</button><button type="button" data-d="-1" data-tip="Remove 0.5 seconds">&#9660;</button></div></div>
+      <div class="hint">Not shown in the class menu. It only applies when the ability is used in a match.</div>
       <label for="AbilityIcon">Ability icon file name</label>
       <div class="filebox">
-        <input class="field" type="text" id="AbilityIcon" value="AssassinAbility.png" placeholder="AssassinAbility.png">
-        <button type="button" class="btn" data-pick="AbilityIcon">Pick file</button>
+        <div class="thumb" id="th_AbilityIcon"></div>
+        <input class="field" type="text" id="AbilityIcon" placeholder="AssassinAbility.png">
+        <button type="button" class="btn" data-pick="AbilityIcon" data-tip="Choose a PNG from your computer. Its name fills the field and the image is kept so it goes into the zip export.">Pick file</button>
       </div>
+      <div class="hint">Need an icon? Get free ones at <a class="lnk" href="https://game-icons.net" target="_blank" rel="noopener">game-icons.net</a> and download the PNG.</div>
     </section>
 
     <section>
       <h2>Passive</h2>
       <label for="PassiveName">Passive name</label>
-      <input class="field" type="text" id="PassiveName" value="HP Regeneration">
+      <input class="field" type="text" id="PassiveName">
       <label for="PassiveDescription">Passive description</label>
-      <textarea class="field" id="PassiveDescription">Generates 1 HP every second.</textarea>
+      <textarea class="field" id="PassiveDescription"></textarea>
       <label for="PassiveIcon">Passive icon file name</label>
       <div class="filebox">
-        <input class="field" type="text" id="PassiveIcon" value="HpRegenerationIcon.png" placeholder="HpRegenerationIcon.png">
-        <button type="button" class="btn" data-pick="PassiveIcon">Pick file</button>
+        <div class="thumb" id="th_PassiveIcon"></div>
+        <input class="field" type="text" id="PassiveIcon" placeholder="HpRegenerationIcon.png">
+        <button type="button" class="btn" data-pick="PassiveIcon" data-tip="Choose a PNG from your computer. Its name fills the field and the image is kept so it goes into the zip export.">Pick file</button>
       </div>
-      <div class="hint">Pick file only reads the file name. Nothing is uploaded or stored.</div>
+      <div class="hint">Icons also from <a class="lnk" href="https://game-icons.net" target="_blank" rel="noopener">game-icons.net</a>.</div>
     </section>
   </div>
 
   <div class="sticky">
     <section>
       <h2>Preview</h2>
-      <div class="card"><b id="pvAb"></b><small id="pvAbD"></small><br><small id="pvCd"></small></div>
+      <div class="card"><b id="pvAb"></b><small id="pvAbD"></small></div>
       <div class="card"><b id="pvPa"></b><small id="pvPaD"></small></div>
     </section>
     <section>
@@ -193,43 +216,96 @@ pre.flash{animation:flash .5s}
       <pre id="out"></pre>
       <div id="msgs"></div>
       <div class="btns">
-        <button class="btn primary" id="exp">Export .json</button>
-        <button class="btn" id="expLua">Export .lua stub</button>
-        <button class="btn" id="copy">Copy JSON</button>
-        <button class="btn" id="imp">Import .json</button>
+        <button class="btn primary" id="expZip" data-tip="Downloads one .zip with this class's .json, an empty .lua file and the icon images you attached. Unzip it into your mod folder. The easiest way to get everything.">Export class (.zip)</button>
+        <button class="btn" id="exp" data-tip="Downloads only the class .json. Use this if you already have the .lua and icon files.">Export .json</button>
+        <button class="btn" id="expLua" data-tip="Downloads an empty .lua file named to match the .json. The game needs both files with the same name. Write your ability script inside it.">Export .lua stub</button>
+        <button class="btn" id="copy" data-tip="Copies the JSON text above to your clipboard.">Copy JSON</button>
       </div>
       <div class="hint">The .json and .lua must share a file name. Both use the display name.</div>
     </section>
   </div>
 </main>
-<input type="file" id="impFile" accept=".json,application/json" hidden>
-<input type="file" id="pickFile" accept="image/png,image/*" hidden>
+<input type="file" id="impFile" accept=".json,.zip,application/json,application/zip" multiple hidden>
+<input type="file" id="pickFile" accept="image/*" hidden>
 <div id="toast"></div>
+<div id="tip" role="tooltip"></div>
 
 <script>
+/*ZIP*/
+const CRC=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function crc32(b){let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=CRC[(c^b[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0}
+function makeZip(files){
+  const enc=new TextEncoder(),parts=[],cd=[];let off=0;
+  const d=new Date(),dt=((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate(),tm=(d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1);
+  for(const f of files){
+    const nm=enc.encode(f.name),crc=crc32(f.data),sz=f.data.length;
+    const lh=new DataView(new ArrayBuffer(30));
+    lh.setUint32(0,0x04034b50,true);lh.setUint16(4,20,true);lh.setUint16(6,0x0800,true);lh.setUint16(10,tm,true);lh.setUint16(12,dt,true);
+    lh.setUint32(14,crc,true);lh.setUint32(18,sz,true);lh.setUint32(22,sz,true);lh.setUint16(26,nm.length,true);
+    parts.push(new Uint8Array(lh.buffer),nm,f.data);
+    const ch=new DataView(new ArrayBuffer(46));
+    ch.setUint32(0,0x02014b50,true);ch.setUint16(4,20,true);ch.setUint16(6,20,true);ch.setUint16(8,0x0800,true);ch.setUint16(12,tm,true);ch.setUint16(14,dt,true);
+    ch.setUint32(16,crc,true);ch.setUint32(20,sz,true);ch.setUint32(24,sz,true);ch.setUint16(28,nm.length,true);ch.setUint32(42,off,true);
+    cd.push(new Uint8Array(ch.buffer),nm);
+    off+=30+nm.length+sz;
+  }
+  const cdSize=cd.reduce((a,b)=>a+b.length,0),end=new DataView(new ArrayBuffer(22));
+  end.setUint32(0,0x06054b50,true);end.setUint16(8,files.length,true);end.setUint16(10,files.length,true);end.setUint32(12,cdSize,true);end.setUint32(16,off,true);
+  return new Blob([...parts,...cd,new Uint8Array(end.buffer)],{type:"application/zip"});
+}
+async function readZip(buf){
+  const dv=new DataView(buf),u8=new Uint8Array(buf),dec=new TextDecoder();let e=-1;
+  for(let i=buf.byteLength-22;i>=Math.max(0,buf.byteLength-65557);i--)if(dv.getUint32(i,true)===0x06054b50){e=i;break}
+  if(e<0)throw new Error("Not a valid zip file");
+  const n=dv.getUint16(e+10,true);let p=dv.getUint32(e+16,true);const out=[];
+  for(let i=0;i<n;i++){
+    if(dv.getUint32(p,true)!==0x02014b50)break;
+    const method=dv.getUint16(p+10,true),csz=dv.getUint32(p+20,true),nl=dv.getUint16(p+28,true),el=dv.getUint16(p+30,true),cl=dv.getUint16(p+32,true),lo=dv.getUint32(p+42,true);
+    const name=dec.decode(u8.subarray(p+46,p+46+nl)).replace(/\\/g,"/");p+=46+nl+el+cl;
+    if(name.endsWith("/")||name.startsWith("__MACOSX"))continue;
+    out.push({name,bytes:async()=>{
+      const ln=dv.getUint16(lo+26,true),le=dv.getUint16(lo+28,true),s=lo+30+ln+le,raw=u8.slice(s,s+csz);
+      if(method===0)return raw;
+      if(method===8){
+        if(typeof DecompressionStream==="undefined")throw new Error("This browser can't open compressed zips");
+        const ds=new Blob([raw]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+        return new Uint8Array(await new Response(ds).arrayBuffer());
+      }
+      throw new Error("Unsupported zip compression");
+    }});
+  }
+  return out;
+}
+/*ENDZIP*/
+
 const WEAPONS=["Rifle","SMG","Auto Sniper","Pistol","Rocket Launcher","Shotgun","Grappling Hook","Silenced Pistol","Smoke Launcher","Grenade Launcher","Teargas Launcher","Automatic Pistol","Sniper Rifle","Decoy Launcher","Carbine","Bullpup MP","Tommy Gun","Taser","Sticky Launcher","Heavy Pistol","Modified Pistol","Silenced Rifle","Flash Launcher","Rope Launcher","Syringe Gun","Slug Shotgun","Geiger Counter","Chrono-Nade Launcher","Sceptre","Dagger","Hammer","Sickle","Bottle","Bottle","Gladius","T-Shirt Cannon","Drone Remote","Wrench"];
 const CLOTHING=["Robber_Hoodie_Red","Customer_Hoodie_Red","Customer_Jacket_Green","Customer_Hoodie_Black","Customer_Jacket_Red","Employee_PurpleTie","Employee_RedTie","Cook","Cop_1","Cop_2","Cop_3","Cop_4","DEA_Female_1","DEA_Female_2","DEA_Female_3","DEA_Female_4","DEA_Male_1","DEA_Male_2","DEA_Male_3","DEA_Male_4","Spy_Male","Spy_Female"];
+const CATS={true:["Breach","Stealth","Support"],false:["Combat","Intel","Support"]};
+const catOpts=()=>CATS[isRobber].map((l,i)=>({value:i,label:`${i} - ${l}`}));
+const KEYS=["AbilityIcon","PassiveIcon"];
 const $=id=>document.getElementById(id);
-let isRobber=true;
+let isRobber=true,icons={AbilityIcon:null,PassiveIcon:null},lib=null,saveT=null;
 
-/* custom select */
+/* ---------- custom select ---------- */
 const openSels=new Set();
-function makeSelect(host,opts,initial,onChange){
+function makeSelect(host,initOpts,initial,onChange){
   host.className="sel";
   host.innerHTML=`<button type="button" class="field sel-btn" aria-haspopup="listbox"><span></span><svg viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2 5l5 5 5-5"/></svg></button><div class="sel-list" role="listbox"></div>`;
   const btn=host.querySelector("button"),list=host.querySelector(".sel-list"),lab=btn.querySelector("span");
-  let value=initial,hl=-1,buf="",bufT;
-  opts.forEach((o,i)=>{const d=document.createElement("div");d.className="sel-opt";d.textContent=o.label;d.dataset.i=i;d.setAttribute("role","option");
-    d.onmousemove=()=>setHl(i);d.onclick=()=>{pick(i);close();btn.focus()};list.appendChild(d)});
-  const items=[...list.children];
-  function paint(){const cur=opts.findIndex(o=>String(o.value)===String(value));lab.textContent=cur>-1?opts[cur].label:"";
-    items.forEach((el,i)=>el.classList.toggle("cur",i===cur))}
+  let opts=initOpts,items=[],value=initial,hl=-1,buf="",bufT;
+  const curIdx=()=>opts.findIndex(o=>String(o.value)===String(value));
+  function build(){list.innerHTML="";
+    opts.forEach((o,i)=>{const d=document.createElement("div");d.className="sel-opt";d.textContent=o.label;d.setAttribute("role","option");
+      d.onmousemove=()=>setHl(i);d.onclick=()=>{pick(i);close();btn.focus()};list.appendChild(d)});
+    items=[...list.children];paint()}
+  function paint(){const c=curIdx();lab.textContent=c>-1?opts[c].label:"";items.forEach((el,i)=>el.classList.toggle("cur",i===c))}
   function setHl(i){hl=i;items.forEach((el,j)=>el.classList.toggle("hl",j===i));if(items[i])items[i].scrollIntoView({block:"nearest"})}
   function pick(i){value=opts[i].value;paint();onChange&&onChange(value)}
   function open(){openSels.forEach(s=>s!==api&&s.close());
     const r=host.getBoundingClientRect();host.classList.toggle("up",innerHeight-r.bottom<280&&r.top>innerHeight-r.bottom);
-    host.classList.add("open");host.closest("section").classList.add("raised");openSels.add(api);setHl(Math.max(0,opts.findIndex(o=>String(o.value)===String(value))))}
-  function close(){host.classList.remove("open");openSels.delete(api);const sc=host.closest("section");setTimeout(()=>{if(!sc.querySelector(".sel.open"))sc.classList.remove("raised")},250)}
+    host.classList.add("open");host.closest("section").classList.add("raised");openSels.add(api);setHl(Math.max(0,curIdx()))}
+  function close(){host.classList.remove("open");openSels.delete(api);const sc=host.closest("section");
+    setTimeout(()=>{if(!sc.querySelector(".sel.open"))sc.classList.remove("raised")},250)}
   btn.onclick=()=>host.classList.contains("open")?close():open();
   btn.onkeydown=e=>{
     const isOpen=host.classList.contains("open");
@@ -239,25 +315,25 @@ function makeSelect(host,opts,initial,onChange){
     else if(e.key.length===1){clearTimeout(bufT);buf+=e.key.toLowerCase();bufT=setTimeout(()=>buf="",600);
       const m=opts.findIndex(o=>o.label.toLowerCase().replace(/^\d+ - /,"").startsWith(buf));if(m>-1){if(!isOpen)open();setHl(m)}}
   };
-  const api={close,get value(){return value},set value(v){value=v;paint()}};
-  paint();return api;
+  const api={close,setOptions(o,v){opts=o;if(v!==undefined)value=v;build()},get value(){return value},set value(v){value=v;paint()}};
+  build();return api;
 }
-document.addEventListener("mousedown",e=>openSels.forEach(s=>{}));
-document.addEventListener("click",e=>{openSels.forEach(s=>{if(!e.target.closest(".sel.open"))s.close()})});
+document.addEventListener("click",e=>{if(!e.target.closest(".sel.open"))openSels.forEach(s=>s.close())});
 
-const cloth=makeSelect($("clothSel"),[...CLOTHING.map(c=>({value:c,label:c})),{value:"__custom",label:"Custom..."}],"Robber_Hoodie_Red",render);
+const libSel=makeSelect($("libSel"),[],"",id=>switchTo(id));
+const cloth=makeSelect($("clothSel"),[...CLOTHING.map(c=>({value:c,label:c})),{value:"__custom",label:"Custom..."}],"Robber_Hoodie_Red",()=>render());
 const wOpts=WEAPONS.map((w,i)=>({value:i+1,label:`${i+1} - ${w}`}));
-const pri=makeSelect($("priSel"),wOpts,1,render);
-const sec=makeSelect($("secSel"),wOpts,2,render);
+const pri=makeSelect($("priSel"),wOpts,1,()=>render());
+const sec=makeSelect($("secSel"),wOpts,2,()=>render());
+const cat=makeSelect($("catSel"),catOpts(),0,()=>render());
 
-/* number steppers */
 document.querySelectorAll(".num").forEach(n=>{
   const inp=n.querySelector("input"),step=parseFloat(n.dataset.step),min=parseFloat(n.dataset.min);
   n.querySelectorAll("button").forEach(b=>b.onclick=()=>{
     const v=(parseFloat(inp.value)||0)+step*b.dataset.d;inp.value=Math.max(min,Math.round(v*100)/100);render()});
 });
 
-/* data */
+/* ---------- data ---------- */
 const fmtNum=n=>{n=Number(n)||0;return Number.isInteger(n)?n.toFixed(1):String(n)};
 function data(){
   return{IsRobber:isRobber,DisplayName:$("DisplayName").value,
@@ -266,10 +342,19 @@ function data(){
     AbilityIcon:$("AbilityIcon").value.trim(),AbilityCooldown:Number($("AbilityCooldown").value)||0,
     PassiveName:$("PassiveName").value,PassiveDescription:$("PassiveDescription").value,
     PassiveIcon:$("PassiveIcon").value.trim(),PrimaryWeapon:Number(pri.value),SecondaryWeapon:Number(sec.value),
-    ClassCategory:parseInt($("ClassCategory").value)||0};
+    ClassCategory:Number(cat.value)||0};
 }
 const toJSON=d=>"{\n"+Object.entries(d).map(([k,v])=>`    ${JSON.stringify(k)}: ${k==="AbilityCooldown"?fmtNum(v):JSON.stringify(v)}`).join(",\n")+"\n}";
-const safeName=()=>($("DisplayName").value.trim()||"CustomClass").replace(/[^\w\-]+/g,"_");
+const safeOf=n=>((n||"").trim()||"CustomClass").replace(/[^\w\-]+/g,"_");
+function normalize(j){
+  const s=v=>typeof v==="string"?v:"",w=(v,def)=>{v=Number(v);return v>=1&&v<=WEAPONS.length?Math.round(v):def};
+  return{IsRobber:j.IsRobber!==false,DisplayName:s(j.DisplayName),ClothingRowName:s(j.ClothingRowName),AbilityName:s(j.AbilityName),AbilityDescription:s(j.AbilityDescription),
+    AbilityIcon:s(j.AbilityIcon),AbilityCooldown:Number(j.AbilityCooldown)||0,PassiveName:s(j.PassiveName),PassiveDescription:s(j.PassiveDescription),
+    PassiveIcon:s(j.PassiveIcon),PrimaryWeapon:w(j.PrimaryWeapon,1),SecondaryWeapon:w(j.SecondaryWeapon,2),ClassCategory:[0,1,2].includes(Number(j.ClassCategory))?Number(j.ClassCategory):0};
+}
+const blankD=()=>normalize({IsRobber:true,DisplayName:"New class",ClothingRowName:"Robber_Hoodie_Red",AbilityCooldown:30});
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+
 function validate(d){const m=[];
   if(!d.DisplayName.trim())m.push(["err","Display name is empty."]);
   if(!d.ClothingRowName)m.push(["err","Clothing row is empty."]);
@@ -279,52 +364,139 @@ function validate(d){const m=[];
   if(!isRobber&&/^Robber_/i.test(d.ClothingRowName))m.push(["warn","Cop class is using a Robber clothing row."]);
   if(d.AbilityIcon&&d.AbilityIcon===d.PassiveIcon)m.push(["warn","Ability and passive share the same icon."]);
   return m}
+
+/* ---------- storage ---------- */
+const KEY="ph2cb.v1";
+function loadLib(){try{const l=JSON.parse(localStorage.getItem(KEY));if(l&&Array.isArray(l.classes)&&l.classes.length)return l}catch{}return null}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(lib));setStatus("All changes saved in this browser","ok");return true}
+  catch{setStatus("Browser storage is full or blocked. Use Export backup so you don't lose work.","bad");return false}}
+function setStatus(t,c){const s=$("status");s.textContent=t;s.className="status "+(c||"")}
+const cur=()=>lib.classes.find(c=>c.id===lib.current);
+function save(){const c=cur();if(!c)return;c.d=data();c.icons={...icons};c.updated=Date.now();persist();refreshLib()}
+function flushSave(){if(saveT){clearTimeout(saveT);saveT=null}save()}
+function refreshLib(){libSel.setOptions(lib.classes.map(c=>({value:c.id,label:`${c.d.DisplayName||"Untitled"}  (${c.d.IsRobber?"Robber":"Cop"})`})),lib.current)}
+function fillForm(entry){
+  const d=entry.d;isRobber=d.IsRobber;
+  $("DisplayName").value=d.DisplayName;
+  if(CLOTHING.includes(d.ClothingRowName)){cloth.value=d.ClothingRowName;$("ClothingCustom").value=""}
+  else{cloth.value="__custom";$("ClothingCustom").value=d.ClothingRowName}
+  $("AbilityName").value=d.AbilityName;$("AbilityDescription").value=d.AbilityDescription;$("AbilityIcon").value=d.AbilityIcon;$("AbilityCooldown").value=d.AbilityCooldown;
+  $("PassiveName").value=d.PassiveName;$("PassiveDescription").value=d.PassiveDescription;$("PassiveIcon").value=d.PassiveIcon;
+  pri.value=d.PrimaryWeapon;sec.value=d.SecondaryWeapon;cat.setOptions(catOpts(),d.ClassCategory);
+  icons={AbilityIcon:entry.icons?.AbilityIcon||null,PassiveIcon:entry.icons?.PassiveIcon||null};
+  render(true);
+}
+function switchTo(id){flushSave();lib.current=id;fillForm(cur());persist();refreshLib()}
+function addClass(d,ic){const c={id:uid(),d,icons:ic||{AbilityIcon:null,PassiveIcon:null},updated:Date.now()};lib.classes.push(c);return c}
+
+/* ---------- render ---------- */
 let last="";
-function render(){
+function render(skipSave){
   const d=data(),out=toJSON(d);
   if(out!==last){$("out").textContent=out;if(last){const p=$("out");p.classList.remove("flash");void p.offsetWidth;p.classList.add("flash")}last=out}
-  $("pvAb").textContent=d.AbilityName||"(ability)";$("pvAbD").textContent=d.AbilityDescription;$("pvCd").textContent="Cooldown: "+fmtNum(d.AbilityCooldown)+"s";
+  $("pvAb").textContent=d.AbilityName||"(ability)";$("pvAbD").textContent=d.AbilityDescription;
   $("pvPa").textContent=d.PassiveName||"(passive)";$("pvPaD").textContent=d.PassiveDescription;
   $("msgs").innerHTML=validate(d).map(([t,s])=>`<div class="${t==="err"?"err":"warn"}">${s}</div>`).join("");
   $("ClothingCustom").style.display=cloth.value==="__custom"?"block":"none";
   document.body.classList.toggle("cop",!isRobber);
   $("sideToggle").classList.toggle("cop",!isRobber);
   document.querySelectorAll("#sideToggle button").forEach(b=>b.classList.toggle("on",(b.dataset.v==="true")===isRobber));
+  KEYS.forEach(k=>{const t=$("th_"+k);t.classList.toggle("has",!!icons[k]);
+    t.innerHTML=icons[k]?`<img src="${icons[k]}" alt=""><button type="button" class="x" data-rm="${k}" data-tip="Remove the attached image. The file name stays.">&times;</button>`:"no image"});
+  if(!skipSave){setStatus("Saving...");clearTimeout(saveT);saveT=setTimeout(()=>{saveT=null;save()},350)}
 }
-document.querySelectorAll("input.field,textarea.field").forEach(e=>e.addEventListener("input",render));
-document.querySelectorAll("#sideToggle button").forEach(b=>b.onclick=()=>{isRobber=b.dataset.v==="true";render()});
+document.querySelectorAll("input.field,textarea.field").forEach(e=>e.addEventListener("input",()=>render()));
+document.querySelectorAll("#sideToggle button").forEach(b=>b.onclick=()=>{isRobber=b.dataset.v==="true";cat.setOptions(catOpts(),cat.value);render()});
+document.addEventListener("click",e=>{const x=e.target.closest("[data-rm]");if(x){icons[x.dataset.rm]=null;render()}});
+window.addEventListener("pagehide",()=>{if(lib)flushSave()});
 
-/* file name picker */
+/* ---------- icon picking ---------- */
 let pickTarget=null;
 document.querySelectorAll("[data-pick]").forEach(b=>b.onclick=()=>{pickTarget=b.dataset.pick;$("pickFile").click()});
-$("pickFile").onchange=e=>{const f=e.target.files[0];if(f&&pickTarget){$(pickTarget).value=f.name;render()}e.target.value=""};
+$("pickFile").onchange=e=>{const f=e.target.files[0];e.target.value="";if(!f||!pickTarget)return;const k=pickTarget,r=new FileReader();
+  r.onload=()=>{icons[k]=r.result;$(k).value=f.name;render();if(f.size>800*1024)toast("Large image. Browser storage is limited, export a backup")};r.readAsDataURL(f)};
 
-/* ripple */
+/* ---------- files / zip ---------- */
+const enc=new TextEncoder();
+function dataUrlBytes(u){const b=atob(u.split(",")[1]),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
+const bytesToUrl=(bytes,mime)=>new Promise(res=>{const r=new FileReader();r.onload=()=>res(r.result);r.readAsDataURL(new Blob([bytes],{type:mime}))});
+const mimeOf=n=>/\.png$/i.test(n)?"image/png":/\.jpe?g$/i.test(n)?"image/jpeg":/\.gif$/i.test(n)?"image/gif":/\.webp$/i.test(n)?"image/webp":"application/octet-stream";
+const baseName=n=>n.slice(n.lastIndexOf("/")+1);
+function classFiles(c,prefix){
+  const base=safeOf(c.d.DisplayName),files=[
+    {name:prefix+base+".json",data:enc.encode(toJSON(c.d))},
+    {name:prefix+base+".lua",data:enc.encode(`-- ${c.d.DisplayName} ability logic\n-- Must share the file name with ${base}.json\n`)}];
+  const seen=new Set();
+  KEYS.forEach(k=>{const n=(c.d[k]||"").replace(/[\\/]/g,"_");if(c.icons[k]&&n&&!seen.has(n.toLowerCase())){seen.add(n.toLowerCase());files.push({name:prefix+n,data:dataUrlBytes(c.icons[k])})}});
+  return files}
+function download(name,blob){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
+const textBlob=(t,type)=>new Blob([t],{type:type||"text/plain"});
+function blockedByErrors(){if(validate(data()).some(m=>m[0]==="err")){toast("Fix the errors first");return true}return false}
+
+$("expZip").onclick=()=>{if(blockedByErrors())return;flushSave();const c=cur();download(safeOf(c.d.DisplayName)+".zip",makeZip(classFiles(c,"")));toast("Exported "+safeOf(c.d.DisplayName)+".zip")};
+$("exp").onclick=()=>{if(blockedByErrors())return;download(safeOf($("DisplayName").value)+".json",textBlob(toJSON(data()),"application/json"));toast("Exported "+safeOf($("DisplayName").value)+".json")};
+$("expLua").onclick=()=>{const b=safeOf($("DisplayName").value);download(b+".lua",textBlob(`-- ${$("DisplayName").value} ability logic\n-- Must share the file name with ${b}.json\n`));toast("Exported "+b+".lua")};
+$("copy").onclick=async()=>{try{await navigator.clipboard.writeText($("out").textContent);toast("JSON copied")}catch{toast("Copy failed")}};
+$("expAll").onclick=()=>{flushSave();const used={},files=[];
+  lib.classes.forEach(c=>{let f=safeOf(c.d.DisplayName);used[f]=(used[f]||0)+1;if(used[f]>1)f+="-"+used[f];files.push(...classFiles(c,f+"/"))});
+  download("PH2-classes-backup.zip",makeZip(files));toast("Backup exported ("+lib.classes.length+" classes)")};
+
+/* ---------- import ---------- */
+$("imp").onclick=()=>$("impFile").click();
+async function addImported(j,ents,path){
+  if(!j||typeof j!=="object"||!("DisplayName" in j||"AbilityName" in j))throw new Error("Not a class .json");
+  const d=normalize(j),ic={AbilityIcon:null,PassiveIcon:null},dir=path.includes("/")?path.slice(0,path.lastIndexOf("/")+1):"";
+  for(const k of KEYS){const n=d[k];if(!n)continue;
+    const ent=ents.find(x=>x.name.toLowerCase()===(dir+n).toLowerCase())||ents.find(x=>baseName(x.name).toLowerCase()===n.toLowerCase());
+    if(ent)ic[k]=await bytesToUrl(await ent.bytes(),mimeOf(n))}
+  return addClass(d,ic)}
+$("impFile").onchange=async e=>{
+  const files=[...e.target.files];e.target.value="";let n=0,lastC=null;flushSave();
+  for(const f of files){
+    try{
+      if(/\.zip$/i.test(f.name)){
+        const ents=await readZip(await f.arrayBuffer());
+        for(const j of ents.filter(x=>/\.json$/i.test(x.name))){
+          try{lastC=await addImported(JSON.parse(new TextDecoder().decode(await j.bytes())),ents,j.name);n++}catch{}}
+      }else{lastC=await addImported(JSON.parse(await f.text()),[],"");n++}
+    }catch(err){toast(f.name+": "+err.message)}
+  }
+  if(lastC){lib.current=lastC.id;fillForm(lastC);persist();refreshLib();toast("Imported "+n+" class"+(n===1?"":"es"))}
+  else if(files.length&&!n)toast("No classes found in the file")};
+
+/* ---------- library buttons ---------- */
+$("newC").onclick=()=>{flushSave();const c=addClass(blankD());lib.current=c.id;fillForm(c);persist();refreshLib();$("DisplayName").focus();$("DisplayName").select()};
+$("dupC").onclick=()=>{flushSave();const s=cur(),c=addClass({...s.d,DisplayName:s.d.DisplayName+" copy"},{...s.icons});lib.current=c.id;fillForm(c);persist();refreshLib();toast("Duplicated")};
+let delArmed=false,delT;
+$("delC").onclick=()=>{const b=$("delC");
+  if(!delArmed){delArmed=true;b.classList.add("armed");b.textContent="Confirm delete";delT=setTimeout(resetDel,3000);return}
+  resetDel();lib.classes=lib.classes.filter(c=>c.id!==lib.current);
+  if(!lib.classes.length)addClass(blankD());
+  lib.current=lib.classes[0].id;fillForm(cur());persist();refreshLib();toast("Class deleted")};
+function resetDel(){clearTimeout(delT);delArmed=false;const b=$("delC");b.classList.remove("armed");b.textContent="Delete"}
+
+/* ---------- toast + tooltip + ripple ---------- */
+let tT;function toast(t){const el=$("toast");el.textContent=t;el.classList.add("show");clearTimeout(tT);tT=setTimeout(()=>el.classList.remove("show"),2200)}
+const tip=$("tip");let tipT;
+function showTip(el){clearTimeout(tipT);tipT=setTimeout(()=>{tip.textContent=el.dataset.tip;tip.style.left="0px";tip.style.top="0px";tip.classList.add("show");
+  const r=el.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight;
+  let x=Math.min(Math.max(8,r.left+r.width/2-w/2),innerWidth-w-8),y=r.top-h-10;if(y<8)y=r.bottom+10;
+  tip.style.left=x+"px";tip.style.top=y+"px"},350)}
+function hideTip(){clearTimeout(tipT);tip.classList.remove("show")}
+["pointerover","focusin"].forEach(ev=>document.addEventListener(ev,e=>{const t=e.target.closest&&e.target.closest("[data-tip]");if(t)showTip(t)}));
+["pointerout","focusout","pointerdown"].forEach(ev=>document.addEventListener(ev,hideTip));
+document.addEventListener("scroll",hideTip,true);
 document.addEventListener("pointerdown",e=>{const b=e.target.closest(".btn");if(!b)return;const r=b.getBoundingClientRect(),s=Math.max(r.width,r.height);
   const d=document.createElement("span");d.className="rip";d.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;b.appendChild(d);setTimeout(()=>d.remove(),650)});
 
-/* toast + download */
-let tT;function toast(t){const el=$("toast");el.textContent=t;el.classList.add("show");clearTimeout(tT);tT=setTimeout(()=>el.classList.remove("show"),1800)}
-function download(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type:type||"text/plain"}));a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
-$("exp").onclick=()=>{const d=data();if(validate(d).some(m=>m[0]==="err")){toast("Fix the errors first");return}download(safeName()+".json",toJSON(d),"application/json");toast("Exported "+safeName()+".json")};
-$("expLua").onclick=()=>{download(safeName()+".lua",`-- ${$("DisplayName").value} ability logic\n-- Must share the file name with ${safeName()}.json\n`);toast("Exported "+safeName()+".lua")};
-$("copy").onclick=async()=>{try{await navigator.clipboard.writeText($("out").textContent);toast("JSON copied")}catch{toast("Copy failed")}};
-
-/* import */
-$("imp").onclick=()=>$("impFile").click();
-$("impFile").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();
-  r.onload=()=>{try{const j=JSON.parse(r.result);isRobber=j.IsRobber!==false;
-    $("DisplayName").value=j.DisplayName??"";
-    const c=j.ClothingRowName??"";if(CLOTHING.includes(c))cloth.value=c;else{cloth.value="__custom";$("ClothingCustom").value=c}
-    $("AbilityName").value=j.AbilityName??"";$("AbilityDescription").value=j.AbilityDescription??"";$("AbilityIcon").value=j.AbilityIcon??"";
-    $("AbilityCooldown").value=j.AbilityCooldown??0;$("PassiveName").value=j.PassiveName??"";$("PassiveDescription").value=j.PassiveDescription??"";
-    $("PassiveIcon").value=j.PassiveIcon??"";
-    if(j.PrimaryWeapon>=1&&j.PrimaryWeapon<=WEAPONS.length)pri.value=j.PrimaryWeapon;
-    if(j.SecondaryWeapon>=1&&j.SecondaryWeapon<=WEAPONS.length)sec.value=j.SecondaryWeapon;
-    $("ClassCategory").value=j.ClassCategory??0;render();toast("Imported "+f.name)}
-    catch(err){toast("Invalid JSON file")}};
-  r.readAsText(f);e.target.value=""};
-render();
+/* ---------- boot ---------- */
+lib=loadLib();
+if(!lib){lib={classes:[],current:""};
+  const c=addClass(normalize({IsRobber:true,DisplayName:"Assassin",ClothingRowName:"Robber_Hoodie_Red",AbilityName:"Cloak",AbilityDescription:"Turn invisible for 5 seconds.",
+    AbilityIcon:"AssassinAbility.png",AbilityCooldown:30,PassiveName:"HP Regeneration",PassiveDescription:"Generates 1 HP every second.",PassiveIcon:"HpRegenerationIcon.png",PrimaryWeapon:1,SecondaryWeapon:2,ClassCategory:0}));
+  lib.current=c.id}
+if(!cur())lib.current=lib.classes[0].id;
+fillForm(cur());refreshLib();persist();
 </script>
 </body>
 </html>
