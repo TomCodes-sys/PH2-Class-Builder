@@ -32,6 +32,7 @@ main>div:first-child section:nth-child(2){animation-delay:.08s}
 main>div:first-child section:nth-child(3){animation-delay:.16s}
 main>div:last-child section{animation-delay:.12s}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+section.raised{z-index:40}
 section h2{margin:0 0 6px;font-size:15px;color:var(--side);transition:color .35s}
 label{display:block;font-size:13px;color:var(--dim);margin:14px 0 5px}
 
@@ -227,8 +228,8 @@ function makeSelect(host,opts,initial,onChange){
   function pick(i){value=opts[i].value;paint();onChange&&onChange(value)}
   function open(){openSels.forEach(s=>s!==api&&s.close());
     const r=host.getBoundingClientRect();host.classList.toggle("up",innerHeight-r.bottom<280&&r.top>innerHeight-r.bottom);
-    host.classList.add("open");openSels.add(api);setHl(Math.max(0,opts.findIndex(o=>String(o.value)===String(value))))}
-  function close(){host.classList.remove("open");openSels.delete(api)}
+    host.classList.add("open");host.closest("section").classList.add("raised");openSels.add(api);setHl(Math.max(0,opts.findIndex(o=>String(o.value)===String(value))))}
+  function close(){host.classList.remove("open");openSels.delete(api);const sc=host.closest("section");setTimeout(()=>{if(!sc.querySelector(".sel.open"))sc.classList.remove("raised")},250)}
   btn.onclick=()=>host.classList.contains("open")?close():open();
   btn.onkeydown=e=>{
     const isOpen=host.classList.contains("open");
